@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>This is the Title</title>
+    <meta charset="UFT-8">
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,400i,700,900" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body onload="contructItemList()">
+<header>
+    <div class="header-title">
+        <div class="wrapper">
+            <!--<img src="NEED TO MAKE"/>-->
+            <h1>Website title</h1>
+        </div>
+    </div>
+    <div class="wrapper">
+    <nav>
+        <ul>
+            <li><a href="index.html"><div>HOME</div></a></li>
+            <li><a href="order.html"><div>PLACE AN ORDER</div></a></li>
+        </ul>
+    </nav>
+    </div>
+</header>
+
+<section>
+<script>
+var cart = [];
+var items = [""];
+var itemNum = 0;
+
+//adding items to the items[] array based on items in the HTML code
+function contructItemList() {
+    var i = 1;  //redefining i as a local variable
+    var check;  //used to check if the last item has been added
+    var finished = false;
+    while (finished !== true) {
+        check = document.getElementById("item-" + i);
+        if(check) {
+            items.push(String(document.getElementById("item-" + i).id));
+            i++;
+        } else {
+            finished = true;
+            return;
+        }
+    }
+}
+/**adding products from the item[] array to the cart[] array, 
+whenever the 'ADD TO CART' button is bushed in HTML**/
+function addItem(item) {
+    cart[itemNum] = String(items[item]);
+    itemNum++;
+    alert(cart);
+}
+</script>
+<div class="wrapper">
+<form name="order-form">
+    <div id="item-1"> 
+        <p>Greek Lamb Pizza</p>
+        <button type="button" name="item-1" onclick="addItem(1)">ADD TO CART</button>   
+    </div>
+    <div id="item-2"> 
+        <p>Greek Lamb Pizza</p>
+        <button type="button" name="item-2" onclick="addItem(2)">ADD TO CART</button>   
+    </div>
+    
+</form>
+
+</div>
+<div class="wrapper">
+<div class="para-with-title">
+    <h2>This is a Heading 2</h2>    
+    <p>
+        This is text in the paragraph with title. aliquam augue ante, quis vestibulum lorem posuere ut. Fusce blandit neque lorem, eget euismod quam viverra in. Fusce imperdiet risus odio, vel pulvinar magna blandit eget. Quisque aliquet at est posuere porta. Praesent volutpat, arcu non elementum bibendum, ipsum urna pretium dolor, eget accumsan odio sapien id orci. Vivamus nunc turpis, ornare semper velit eu, lacinia 
+    </p>
+</div>
+</div>
+</section>
+<footer>
+<div class="wrapper" style="background-color: inherit">
+    <nav>
+        <ul>
+            <li><a href="index.html">HOME</a></li>
+            <li><a href="gallery.html">GALLERY</a></li>
+            <li><a href="forum.html">FORUM</a></li>
+            <li><a href="contact.html">CONTACT</a></li>
+        </ul> 
+    </nav>
+</div>
+</footer>
+</body>
+</html>

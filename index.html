@@ -10,7 +10,7 @@
 <header>
     <div class="header-title">
         <div class="wrapper">
-            <img src="NEED TO MAKE"/>
+            <!--<img src="NEED TO MAKE"/>-->
             <h1>Website title</h1>
         </div>
     </div>
@@ -18,9 +18,7 @@
     <nav>
         <ul>
             <li><a href="index.html"><div>HOME</div></a></li>
-            <li><a href="gallery.html"><div>GALLERY</div></a></li>
-            <li><a href="forum.html"><div>FORUM</div></a></li>
-            <li><a href="contact.html"><div>CONTACT</div></a></li>
+            <li><a href="order.html"><div>PLACE AN ORDER</div></a></li>
         </ul>
     </nav>
     </div>
@@ -30,7 +28,7 @@
 <script>
 var currentImg = 0;
 
-function bannerRight() {
+function bannerLeft() {
     document.getElementById("img" + currentImg).style.left = "100%";
     if (currentImg < 4) {
         currentImg += 1;
@@ -45,7 +43,7 @@ function bannerRight() {
     document.getElementById("img" + currentImg).style.left = "0";
 }
 
-function bannerLeft() {
+function bannerRight() {
     document.getElementById("img" + currentImg).style.left = "-100%";
     if (currentImg > 0) {
         currentImg -= 1;
@@ -67,8 +65,8 @@ function bannerLeft() {
     <div id="img2"><img src="star_trek_pics/enterprise_d_side.jpg" alt=""></div>
     <div id="img3"><img src="star_trek_pics/enterprise_reboot.jpg" alt=""></div>
     <div id="img4"><img src="star_trek_pics/enterprise_reboot_crash.jpg" alt=""></div>
-    <a class="bannerLeftButton" onclick="bannerLeft()">&#10094;</a>
-    <a class="bannerRightButton" onclick="bannerRight()">&#10095;</a>
+    <a id="bannerLeftButton" onclick="bannerLeft()">&#10094;</a>
+    <a id="bannerRightButton" onclick="bannerRight()">&#10095;</a>
 </div>
 <div class="wrapper">
 <div class="para-with-title">

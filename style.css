@@ -167,6 +167,10 @@ header nav ul li div:hover {
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75) inset;
 }
 
+section {
+    padding-top: 60px;
+}
+
 .para-with-title {
     padding: 20px 0;
 }
@@ -231,10 +235,25 @@ header nav ul li div:hover {
     padding: 10px;
     top: 45%;
 }
-.scroll-banner .bannerRightButton {
+.scroll-banner #bannerRightButton {
     position: absolute;
     width: auto;
     right: 0;
+}
+
+/**ORDER FORM**/
+form div {
+    position: relative;
+    padding: 10px;
+    height: 100px;
+    width: 120px;
+    background-color: red;
+}
+
+form div button{
+    position: absolute;
+    bottom: 10px;
+    padding: 10px;
 }
 
 /**FOOTER**/
