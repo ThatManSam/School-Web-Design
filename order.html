@@ -27,7 +27,8 @@
 <section>
 <script>
 var cart = [];
-var items = [""];
+var cartDisp = [];
+var items = [];
 var itemNum = 0;
 
 //adding items to the items[] array based on items in the HTML code
@@ -46,27 +47,80 @@ function contructItemList() {
         }
     }
 }
-/**adding products from the item[] array to the cart[] array, 
+
+
+function cartListContructor() {
+    cartDisp[itemNum] = document.querySelector("#" + cart[itemNum] + " p").innerHTML;
+    alert(cartDisp[itemNum]);
+    document.getElementById("cart-" + (itemNum + 1)).innerHTML = cartDisp[itemNum];
+    document.getElementById("cart-" + (itemNum + 1)).parentElement.style.display = "block";
+}
+
+/**adding products from the items[] array to the cart[] array, 
 whenever the 'ADD TO CART' button is bushed in HTML**/
 function addItem(item) {
-    cart[itemNum] = String(items[item]);
+    cart[itemNum] = String(items[item - 1]);
+    alert(cart + itemNum);
+    cartListContructor();
     itemNum++;
-    alert(cart);
 }
+
 </script>
+<div class="wide-wrapper">
+<div id="cart-list">
+    <ul>
+        <li>
+            <p id="cart-1"></p>
+        </li>        
+        <li>
+            <p id="cart-2"></p>
+        </li>        
+        <li>
+            <p id="cart-3"></p>
+        </li>        
+        <li>
+            <p id="cart-4"></p>
+        </li>        
+        <li>
+            <p id="cart-5"></p>
+        </li>        
+        <li>
+            <p id="cart-6"></p>
+        </li>        
+        <li>
+            <p id="cart-7"></p>
+        </li>        
+        <li>
+            <p id="cart-8"></p>
+        </li>        
+        <li>
+            <p id="cart-9"></p>
+        </li>        
+        <li>
+            <p id="cart-10"></p>
+        </li>        
+    </ul>
+</div>
+</div>
 <div class="wrapper">
 <form name="order-form">
-    <div id="item-1"> 
-        <p>Greek Lamb Pizza</p>
-        <button type="button" name="item-1" onclick="addItem(1)">ADD TO CART</button>   
-    </div>
-    <div id="item-2"> 
-        <p>Greek Lamb Pizza</p>
-        <button type="button" name="item-2" onclick="addItem(2)">ADD TO CART</button>   
-    </div>
-    
+    <table>
+        <tr>
+            <td>
+                <div id="item-1"> 
+                    <p>Greek Lamb Pizza-1</p>
+                    <button type="button" name="item-1" onclick="addItem(1)">ADD TO CART</button>   
+                </div>
+            </td>
+            <td>
+                <div id="item-2"> 
+                    <p>Greek Lamb Pizza-2</p>
+                    <button type="button" name="item-2" onclick="addItem(2)">ADD TO CART</button>   
+                </div>
+            </td>
+        </tr>
+    </table>
 </form>
-
 </div>
 <div class="wrapper">
 <div class="para-with-title">

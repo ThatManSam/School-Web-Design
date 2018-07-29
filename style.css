@@ -256,6 +256,19 @@ form div button{
     padding: 10px;
 }
 
+/**Cart list**/
+.wide-wrapper {
+    width: 1260px;
+    margin: 0 auto;
+}
+#cart-list {
+    float:right;
+}
+
+#cart-list li {
+    display: none;
+}
+
 /**FOOTER**/
 footer {
     background-color: #000000;
