@@ -6,7 +6,7 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,400i,700,900" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body onload="bannerSetup()">
 <header>
     <div class="header-title">
         <div class="wrapper">
@@ -28,43 +28,58 @@
 <script>
 var currentImg = 0;
 
-function bannerLeft() {
-    document.getElementById("img" + currentImg).style.left = "100%";
+function bannerSetup() {
+    for (var i=0; i < 5; i++) {
+        document.getElementById("img" + i).style.left = 100*i + '%';
+    }
+}
+function bannerRight() {
+    var currentLeftValue;
+    var imgToMove;
     if (currentImg < 4) {
+        for (var i=0; i < 5; i++) {
+            imgToMove = document.getElementById("img" + i);
+            currentLeftValue = imgToMove.style.left;
+            imgToMove.style.left = parseFloat(currentLeftValue) - 100 + "%";
+        }
         currentImg += 1;
     } else {
+        for(var i=0; i < 5; i++) {
+            imgToMove = document.getElementById("img" + i);
+            currentLeftValue = imgToMove.style.left;
+            imgToMove.style.left = parseFloat(currentLeftValue) + 400 + "%";
+        }
         currentImg = 0;
-        document.getElementById("img" + 0).style.left = "-100%";
-        document.getElementById("img" + 1).style.left = "-100%";
-        document.getElementById("img" + 2).style.left = "-100%";
-        document.getElementById("img" + 3).style.left = "-100%";
-        document.getElementById("img" + 4).style.left = "-100%";
     }
-    document.getElementById("img" + currentImg).style.left = "0";
 }
 
-function bannerRight() {
-    document.getElementById("img" + currentImg).style.left = "-100%";
+function bannerLeft() {
+    var currentLeftValue;
+    var imgToMove;
     if (currentImg > 0) {
+        for (var i=0; i < 5; i++) {
+            imgToMove = document.getElementById("img" + i);
+            currentLeftValue = imgToMove.style.left;
+            imgToMove.style.left = parseFloat(currentLeftValue) + 100 + "%";
+        }
         currentImg -= 1;
     } else {
+        for(var i=0; i < 5; i++) {
+            imgToMove = document.getElementById("img" + i);
+            currentLeftValue = imgToMove.style.left;
+            imgToMove.style.left = parseFloat(currentLeftValue) - 400 + "%";
+        }
         currentImg = 4;
-        document.getElementById("img" + 0).style.left = "100%";
-        document.getElementById("img" + 1).style.left = "100%";
-        document.getElementById("img" + 2).style.left = "100%";
-        document.getElementById("img" + 3).style.left = "100%";
-        document.getElementById("img" + 4).style.left = "100%";
     }
-    document.getElementById("img" + currentImg).style.left = "0";
 }
     
 </script>
 <div class="scroll-banner">
-    <div id="img0"><img src="star_trek_pics/enterprise_b.jpg" alt=""></div>
-    <div id="img1"><img src="star_trek_pics/enterprise_d_front.jpg" alt=""></div>
-    <div id="img2"><img src="star_trek_pics/enterprise_d_side.jpg" alt=""></div>
-    <div id="img3"><img src="star_trek_pics/enterprise_reboot.jpg" alt=""></div>
-    <div id="img4"><img src="star_trek_pics/enterprise_reboot_crash.jpg" alt=""></div>
+    <div id="img0" class="banner-img"><img src="star_trek_pics/enterprise_b.jpg" alt=""></div>
+    <div id="img1" class="banner-img"><img src="star_trek_pics/enterprise_d_front.jpg" alt=""></div>
+    <div id="img2" class="banner-img"><img src="star_trek_pics/enterprise_d_side.jpg" alt=""></div>
+    <div id="img3" class="banner-img"><img src="star_trek_pics/enterprise_reboot.jpg" alt=""></div>
+    <div id="img4" class="banner-img"><img src="star_trek_pics/enterprise_reboot_crash.jpg" alt=""></div>
     <a id="bannerLeftButton" onclick="bannerLeft()">&#10094;</a>
     <a id="bannerRightButton" onclick="bannerRight()">&#10095;</a>
 </div>

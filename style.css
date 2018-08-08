@@ -204,14 +204,14 @@ section {
     overflow: hidden;
 }
 
-.scroll-banner div {
+.scroll-banner div.banner-img {
     position: absolute;
     top: -100%;
-    left: -100%;
+    left: 0;
     display: block;
     width: 100%;
     height: auto;
-    transition: left 2s;
+    transition: left 1s;
 }
 
 .scroll-banner div img {
@@ -224,6 +224,7 @@ section {
 .scroll-banner div#img0 {
     display: block;
     left: 0;
+    z-index: 1;
 }
 
 .scroll-banner a {
@@ -234,6 +235,7 @@ section {
     width: auto;
     padding: 10px;
     top: 45%;
+    z-index: 2;
 }
 .scroll-banner #bannerRightButton {
     position: absolute;
@@ -257,16 +259,28 @@ form div button{
 }
 
 /**Cart list**/
-.wide-wrapper {
-    width: 1260px;
-    margin: 0 auto;
+#cart {
+    position: relative;
+    width: 200px;
+    height: 340px;
+    padding: 10px;
+    float: right;
+    background: #cccccc;
+    display: block;
 }
 #cart-list {
-    float:right;
+    float:left;
 }
 
 #cart-list li {
-    display: none;
+    display: block;
+    padding: 5px 0;
+}
+
+#cart-list li button {
+    position: absolute;
+    right: 10px;
+    float: right;
 }
 
 /**FOOTER**/
