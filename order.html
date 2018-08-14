@@ -32,59 +32,99 @@ var itemNum = 0;
 
 //adding items to the items[] array based on items in the HTML code
 function contructItemList() {
-    var i = 0;
-    var check;  //used to check if the last item has been added
-    var finished = false;
-    for (i=0; document.getElementById("item-"+i) != null; i++) {
+    var i;
+    for (i=0; document.getElementById("item-"+i) !== null; i++) {
         items.push({
-            "id": "item-" + i, 
+            "id": i, 
             "name": String(document.getElementById("item-" + i).getAttribute("data-name")), 
-            price: String(document.getElementById("item-" + i).getAttribute("data-price"))
+            "price": String(document.getElementById("item-" + i).getAttribute("data-price"))
         });
     }
     console.log(items);
 }
 
-function cartListContructor(item) {
-    var idIndex = findById(cart[itemNum]);
-    var check;
-    var cartNum = itemNum;
-    var finished = false;
-    newCartItem = document.createElement('li'); //Creating a new <li> tag for a new item added to the cart
-    newCartItem.setAttribute("id", "cart-" + itemNum);
-    newCartItem.innerHTML = //The HTML code to be added for the new cart
-    '<button type="button" name="cart-'+ itemNum +'" onclick="removeItem('+ itemNum +')">X</button><p id="cart-item">'+items[item].name+'</p>'
-    document.getElementById("cart-list").appendChild(newCartItem);
+function cartListContructor(index, create) {
+    var newCartItem;
+    var currentItem;
+    itemId = function() {
+        for(i=0; i < cart.length; i++) {
+            if(cart[i].id === index) {
+            return i;
+            }
+        }
+        return -1;
+    }
+    var id = itemId();
+    if(create) {
+        newCartItem = document.createElement("li"); //Creating a new <li> tag for a new item added to the cart
+        newCartItem.setAttribute("id", "cart-" + index);
+        console.log(index);
+        newCartItem.innerHTML = //The HTML code to be added for the new cart
+            '<button type="button" name="cart-'+ index +'" onclick="removeItem('+ index +')">X</button><p id="cart-item">'+cart[id].name+' x <a id="quantity">'+cart[id].quantity+'</a></p>';
+        document.getElementById("cart-list").appendChild(newCartItem);
+    
+    } else {
+        currentItem = document.getElementById("cart-" + index);
+        currentItem.querySelector("#quantity").innerHTML = cart[id].quantity;
+    }
 }
 
-//Adding a product to the cart / array cart[]
 function addItem(item) {
-    cart[itemNum] = items[item].id;
-    console.log(cart[itemNum] = items[item].id);
-    console.log(cart + itemNum);
-    cartListContructor(item);
-    itemNum++;
+    var itemName = items[item].name;
+    var itemId = items[item].id;
+    var create;
+    var index = function() {
+        for(i=0; i < cart.length; i++) {
+            if(cart[i].name === itemName) {
+            return i;
+            }
+        }
+        return -1;
+    }
+    var cartIndex = index();
+    if(cartIndex !== -1) {
+        cart[cartIndex].quantity += 1;
+        create = false;
+    } else {
+        cart.push({
+            "id": itemId,
+            "name": itemName,
+            "quantity": 1
+        });
+        create = true;
+        console.log(cart);
+    }
+    cartListContructor(itemId, create);
 }
 
 //Removing an product from the cart / array cart[] and removing it from the HTML cart list
 function removeItem(index) {
-    if (index > -1) {
-        cart.splice(index, 1);
-        console.log("new cart:    " + cart);
-    }
-    deletedItem = document.getElementById("cart-" + index);
-    console.log(deletedItem);
-    deletedItem.parentElement.removeChild(deletedItem);
-}
-
-//Finding the object in the array items[] array based on its array
-function findById(value) {
-    for (var i = 0; i < items.length; i++) {
-        if(items[i].id === value) {
+    var itemId = function() {
+        for(i=0; i < cart.length; i++) {
+            if(cart[i].id === index) {
             return i;
+            }
         }
+        return -1;
     }
-    return -1;
+    var id = itemId();
+    if(id === -1) {
+        console.log("Cannot remove item that doesn't exist     "+index);
+        console.log(cart);
+        return;
+    } else {
+    if(cart[id].quantity === 1) {
+        deletedItem = document.getElementById("cart-" + index);
+        deletedItem.parentNode.removeChild(deletedItem);
+        cart.splice(id, 1);
+//        cart[id] = "";
+    } else {
+        cart[id].quantity = cart[id].quantity - 1;
+        currentItem = document.getElementById("cart-" + index);
+        currentItem.querySelector("#quantity").innerHTML = cart[id].quantity;
+    }
+    console.log(cart);
+    }
 }
 </script>
 <div class="wrapper">
