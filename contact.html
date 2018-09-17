@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>This is the Title</title>
+    <meta charset="UFT-8">
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,400i,700,900" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body onload="bannerSetup()">
+<header>
+    <div class="header-title">
+        <div class="wrapper">
+            <!--<img src="NEED TO MAKE"/>-->
+            <h1>Website title</h1>
+        </div>
+    </div>
+    <div class="wrapper">
+        <div id="menu-trigger">
+            <a onclick="openMenuSidebar()">&#9776; Menu</a>
+        </div>
+        <script>
+        function openMenuSidebar() {
+            document.getElementById("header-navigation").style.left = "0";
+            document.getElementById("navCloseButton").style.display = "block";
+        }
+
+        function closeMenuSidebar() {
+            document.getElementById("header-navigation").style.left = "-250px";
+            document.getElementById("navCloseButton").style.display = "none";
+        }
+
+        function widthTest() {
+            console.log("Width Test");
+            var width = window.innerWidth;
+            if(width >= 600) {
+                closeMenuSidebar();
+            }
+        }
+        </script>
+        <nav id="header-navigation">
+            <a id="navCloseButton" onclick="closeMenuSidebar()">&times;</a>
+            <ul>
+                <li><a href="index.html"><div>HOME</div></a></li>
+                <li><a href="order.html"><div>PLACE AN ORDER</div></a></li>
+                <li><a href="contact.html"><div>CONTACT</div></a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<section>
+<div class="wrapper">
+<form id="contact-form" action="">
+    <p>Name:</p>
+    <input type="text" name="name" placeholder="eg. John Parker">
+    <br />
+    <p>Email:</p>
+    <input type="text" name="email" placeholder="eg. john.parker@example.com">
+    <br />
+    <p>Subject:</p>
+    <input type="text" name="subject" placeholder="eg. Wrong Order">
+    <br />
+    <p>Message:</p>
+    <textarea name="message" id="contact-textarea" cols="30" rows="10"></textarea>
+</div>    
+</form>
+</section>
+<footer>
+<div class="wrapper" style="background-color: inherit">
+    <nav>
+        <ul>
+            <li><a href="index.html">HOME</a></li>
+            <li><a href="order.html">PLACE AN ORDER</a></li>
+            <li><a href="contact.html">CONTACT</a></li>
+    </nav>
+</div>
+</footer>
+</body>
+</html>

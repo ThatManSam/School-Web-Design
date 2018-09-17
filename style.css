@@ -116,6 +116,14 @@ input, select {
 }
 
 /**HEADER and NAVIGATION**/
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+}
+
 header .header-title {
     background-color: #0f0f35;
     color: blue;
@@ -132,6 +140,21 @@ header .header-title h1 {
     padding: 20px;
 }
 
+#menu-trigger {
+    display: none;
+}
+
+#navCloseButton {
+    color: #ffffff;
+    z-index: 99;
+    display: none;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
 header nav {
     text-align: center;
     height: 0; 
@@ -168,7 +191,7 @@ header nav ul li div:hover {
 }
 
 section {
-    padding-top: 60px;
+    margin-top: 160px;
 }
 
 .para-with-title {
@@ -200,25 +223,32 @@ section {
     margin: 0 auto;
     position: relative;
     width: 100%;
-    height: 300px;
+    height: 20vw;
     overflow: hidden;
+}
+
+.scroll-banner a.button {
+    width: 100%;
 }
 
 .scroll-banner div.banner-img {
     position: absolute;
-    top: -100%;
     left: 0;
     display: block;
     width: 100%;
-    height: auto;
+    height: 20vw;
     transition: left 1s;
+    overflow: hidden;
 }
 
 .scroll-banner div img {
     width: inherit;
-    position: relative;
-    top: 0;
-    left: 0;
+    position: absolute;
+    left: -9999px;
+    right: -9999px;
+    top: -9999px;
+    bottom: -9999px;
+    margin: auto;
 }
 
 .scroll-banner div#img0 {
@@ -227,15 +257,19 @@ section {
     z-index: 1;
 }
 
-.scroll-banner a {
-    background-color: rgb(90, 89, 89);
+.scroll-banner a.button {
+    font-size: 2vw;
+    background-color: rgba(90, 89, 89, 0.4);
     color: white;
     cursor: pointer;
     position: absolute;
     width: auto;
-    padding: 10px;
-    top: 45%;
+    padding: 9vw 10px;
     z-index: 2;
+    height: 100%;
+}
+.scroll-banner a.button:hover {
+    background-color: rgba(120, 120, 120, 0.8);
 }
 .scroll-banner #bannerRightButton {
     position: absolute;
@@ -244,18 +278,77 @@ section {
 }
 
 /**ORDER FORM**/
-form div {
+form[name="order-form"] td {
     position: relative;
-    padding: 10px;
-    height: 100px;
-    width: 120px;
-    background-color: red;
+    height: 200px;
+    width: 240px;
+    float: left;
 }
 
-form div button{
+form[name="order-form"] div {
+    position: relative;
+    font-family: Lato;
+    font-weight: 400;
+    font-size: 26px;
+    margin: 10px;
+    height: 180px;
+    width: 220px;
+    background-size: auto 100%;
+    background-position: center center;
+    
+    -webkit-transition: all .25s ease-out;
+       -moz-transition: all .25s ease-out;
+        -ms-transition: all .25s ease-out;
+         -o-transition: all .25s ease-out;
+            transition: all .25s ease-out;
+}
+
+form[name="order-form"] div p {
+    position: relative;
+    margin: 15px;
+    top: 15px;
+    padding: 7px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.8);
+    
+    -webkit-transition: all .25s ease-out;
+       -moz-transition: all .25s ease-out;
+        -ms-transition: all .25s ease-out;
+         -o-transition: all .25s ease-out;
+            transition: all .25s ease-out;
+}
+
+form[name="order-form"] div button {
+    font-family: Lato;
+    font-weight: 300;
+    font-size: 22px;
+    border: none;
+    border-radius: 10px;
     position: absolute;
-    bottom: 10px;
-    padding: 10px;
+    margin: 15px;
+    right: 0;
+    bottom: 0;
+    padding: 7px;
+    opacity: 0.7;
+    cursor: pointer;
+    
+    -webkit-transition: all .25s ease-out;
+       -moz-transition: all .25s ease-out;
+        -ms-transition: all .25s ease-out;
+         -o-transition: all .25s ease-out;
+            transition: all .25s ease-out;
+}
+
+form[name="order-form"] div:hover {
+    background-size: auto 110%;
+    background-position: center center;
+}
+
+
+
+form[name="order-form"] div:hover button {
+    opacity: 1;
+    padding: 12px;
 }
 
 /**Cart list**/
@@ -283,6 +376,35 @@ form div button{
     float: right;
 }
 
+div#cart-submit {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding: 15px;
+}
+
+div#order-placed {
+    display: none;
+}
+
+/**Contact Form**/
+#contact-form {
+    padding: 10px;
+}
+
+#contact-form p {
+    font-family: Lato;
+    font-weight: 300;
+    padding: 5px 0;
+}
+
+#contact-form input, #contact-form textarea {
+    font-family: Lato;
+    font-weight: 300;
+    border: 1px solid black;
+    padding: 5px;
+}
+
 /**FOOTER**/
 footer {
     background-color: #000000;
@@ -297,4 +419,165 @@ footer nav ul li {
 footer nav ul li a {
     text-decoration: none;
     color: #ffffff;
+}
+
+@media screen and (max-width: 960px) {
+    .wrapper {
+        width: 600px;
+    }
+
+    .scroll-banner {
+        height: 200px;
+    }
+
+    .scroll-banner div.banner-img {
+        height: 200px;
+    }
+
+    .scroll-banner a.button {
+        font-size: 20px;
+        padding: 90px 10px;
+    }
+
+    .scroll-banner div img {
+        position: absolute;
+        left: -9999px;
+        right: -9999px;
+        top: -9999px;
+        bottom: -9999px;
+        margin: auto;
+        height: 550px;
+        width: auto;
+    }
+
+    #cart {
+        width: 100px;
+    }
+
+    form[name="order-form"] td {
+        height: 180px;
+        width: 220px;
+    }
+
+    form[name="order-form"] div {
+        font-size: 26px;
+        margin: 10px;
+        height: 160px;
+        width: 200px;
+    }
+    
+    form[name="order-form"] div p {
+        margin: 10px;
+        top: 10px;
+        padding: 5px;
+    }
+    
+    form[name="order-form"] div button {
+        font-size: 20px;
+        margin: 10px;
+        right: 0;
+        bottom: 0;
+        padding: 10px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .wrapper {
+        width: 100%;
+    }
+    .scroll-banner div img {
+        height: 450px;
+    }
+
+    #cart {
+        width: 100px;
+    }
+    
+    form[name="order-form"] td {
+        height: 140px;
+        width: 160px;
+    }
+
+    form[name="order-form"] div {
+        font-size: 16px;
+        margin: 10px;
+        height: 120px;
+        width: 140px;
+    }
+    
+    form[name="order-form"] div p {
+        margin: 10px;
+        top: 10px;
+        padding: 5px;
+    }
+    
+    form[name="order-form"] div button {
+        font-size: 16px;
+        margin: 10px;
+        right: 0;
+        bottom: 0;
+        padding: 5px;
+    }
+
+    form[name="order-form"] div:hover button {
+        padding: 7px;
+    }
+
+    /**Navigation side bar**/
+    #menu-trigger {
+        display: block;
+        font-family: Lato;
+        font-weight: 300;
+        font-size: 36px;
+        padding: 5px;
+    }
+
+    #menu-trigger {
+        cursor: pointer;
+    }
+
+    section {
+        margin-top: 146px;
+    }
+    
+    header nav {
+        height: 100vh;
+        width: 250px;
+        position: fixed;
+        z-index: 98;
+        top: 0;
+        left: -250px;
+        background-color: #111;
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px;
+        /**Reseting**/
+        text-align: right;
+    }
+    
+    header nav ul li {
+        padding: 5px;
+        /**Reseting**/
+        display: block;
+    }
+        
+    header nav ul li div {
+        color: #000000;
+        font: normal 300 20px Lato;
+        -webkit-box-shadow: 0px 0px 10px 0px rgba(255,255,255,0.75);
+        -moz-box-shadow: 0px 0px 10px 0px rgba(255,255,255,0.75);
+        box-shadow: 0px 0px 10px 0px rgba(255,255,255,0.75);
+        height: auto;
+        padding: 15px 25px;
+        border-radius: 25px;
+        border: 0px;
+        background-color: #ffffff;
+        white-space: nowrap;
+    }
+    
+    header nav ul li div:hover {
+        -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75) inset;
+        -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75) inset;
+        box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75) inset;
+    }
 }

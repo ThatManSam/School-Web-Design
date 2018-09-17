@@ -15,12 +15,36 @@
         </div>
     </div>
     <div class="wrapper">
-    <nav>
-        <ul>
-            <li><a href="index.html"><div>HOME</div></a></li>
-            <li><a href="order.html"><div>PLACE AN ORDER</div></a></li>
-        </ul>
-    </nav>
+        <div id="menu-trigger">
+            <a onclick="openMenuSidebar()">&#9776; Menu</a>
+        </div>
+        <script>
+        function openMenuSidebar() {
+            document.getElementById("header-navigation").style.left = "0";
+            document.getElementById("navCloseButton").style.display = "block";
+        }
+
+        function closeMenuSidebar() {
+            document.getElementById("header-navigation").style.left = "-250px";
+            document.getElementById("navCloseButton").style.display = "none";
+        }
+
+        function widthTest() {
+            console.log("Width Test");
+            var width = window.innerWidth;
+            if(width >= 600) {
+                closeMenuSidebar();
+            }
+        }
+        </script>
+        <nav id="header-navigation">
+            <a id="navCloseButton" onclick="closeMenuSidebar()">&times;</a>
+            <ul>
+                <li><a href="index.html"><div>HOME</div></a></li>
+                <li><a href="order.html"><div>PLACE AN ORDER</div></a></li>
+                <li><a href="contact.html"><div>CONTACT</div></a></li>
+            </ul>
+        </nav>
     </div>
 </header>
 
@@ -33,11 +57,11 @@ var itemNum = 0;
 //adding items to the items[] array based on items in the HTML code
 function contructItemList() {
     var i;
-    for (i=0; document.getElementById("item-"+i) !== null; i++) {
+    for (i=0; document.getElementById("item-"+i) !== null; i++) {//each item added as an object with some properties
         items.push({
             "id": i, 
-            "name": String(document.getElementById("item-" + i).getAttribute("data-name")), 
-            "price": String(document.getElementById("item-" + i).getAttribute("data-price"))
+            "name": document.getElementById("item-" + i).getAttribute("data-name"), 
+            "price": Number(document.getElementById("item-" + i).getAttribute("data-price"))
         });
     }
     console.log(items);
@@ -117,7 +141,6 @@ function removeItem(index) {
         deletedItem = document.getElementById("cart-" + index);
         deletedItem.parentNode.removeChild(deletedItem);
         cart.splice(id, 1);
-//        cart[id] = "";
     } else {
         cart[id].quantity = cart[id].quantity - 1;
         currentItem = document.getElementById("cart-" + index);
@@ -126,88 +149,116 @@ function removeItem(index) {
     console.log(cart);
     }
 }
+
+function submitOrder() {
+    var totalPrice = 0;
+    var price;
+    var quantity;
+    var i;
+    var a;
+    for(a=0; a < cart.length; a++) {
+        id = cart[a].id;
+        itemsId = function() {
+            for(i=0; i < items.length; i++) {
+                if(items[i].id === id) {
+                return i;
+                }
+            }
+        }
+        price = Number(items[itemsId()].price);
+        quantity = Number(cart[a].quantity);
+        totalPrice += (price * quantity);
+    }
+    console.log("Total Price: " + totalPrice); 
+
+}
+
+function orderPlaced() {
+    document.getElementById("order-form").style.display = "none";
+    document.getElementById("order-placed").style.display = "block";
+}
 </script>
 <div class="wrapper">
 <div id="cart">
     <p>Cart:</p>
     <ul id="cart-list">
     </ul>
+    <div id="cart-submit">
+    <button type="submit" name="submit" onclick="submitOrder(), orderPlaced()">SUBMIT</button>
+    </div>
 </div>
+<div id="order-form">
 <form name="order-form">
     <table>
         <tr>
             <td>
-                <div id="item-0" data-name="Greek Lamb Pizza" data-price="10"> 
+                <div id="item-0" data-name="Greek Lamb Pizza" data-price="10" style="background-image: url(images/greek-lamb-pizza.jpg)"> 
                     <p>Greek Lamb Pizza</p>
-                    <button type="button" name="item-0" onclick="addItem(0)">ADD TO CART</button>
+                    <button type="button" name="item-0" onclick="addItem(0)" >ADD TO CART</button>
                 </div>
             </td>
             <td>
-                <div id="item-1" data-name="Meat Lovers Pizza" data-price="10"> 
+                <div id="item-1" data-name="Meat Lovers Pizza" data-price="10" style="background-image: url(images/meat-lovers-pizza.jpg)"> 
                     <p>Meat Lovers Pizza</p>
                     <button type="button" name="item-1" onclick="addItem(1)">ADD TO CART</button>   
                 </div>
             </td>
             <td>
-                <div id="item-2" data-name="Hawaiian Pizza" data-price="12.50"> 
+                <div id="item-2" data-name="Hawaiian Pizza" data-price="12.50" style="background-image: url(images/greek-lamb-pizza.jpg)"> 
                     <p>Hawaiian Pizza</p>
                     <button type="button" name="item-2" onclick="addItem(2)">ADD TO CART</button>   
                 </div>
             </td>
             <td>
-                <div id="item-3" data-name="Supreme Pizza" data-price="12.50"> 
+                <div id="item-3" data-name="Supreme Pizza" data-price="12.50" style="background-image: url(images/greek-lamb-pizza.jpg)"> 
                     <p>Supreme Pizza</p>
                     <button type="button" name="item-3" onclick="addItem(3)">ADD TO CART</button>   
                 </div>
             </td>
-        </tr>
-        <tr>
             <td>
-                <div id="item-4" data-name="Garlic Pizza" data-price="10"> 
+                <div id="item-4" data-name="Garlic Pizza" data-price="10" style="background-image: url(images/greek-lamb-pizza.jpg)"> 
                     <p>Garlic Pizza</p>
                     <button type="button" name="item-4" onclick="addItem(4)">ADD TO CART</button>
                 </div>
             </td>
             <td>
-                <div id="item-5" data-name="Cheese Pizza" data-price="10"> 
+                <div id="item-5" data-name="Cheese Pizza" data-price="10" style="background-image: url(images/greek-lamb-pizza.jpg)"> 
                     <p>Cheese Pizza</p>
                     <button type="button" name="item-5" onclick="addItem(5)">ADD TO CART</button>   
                 </div>
             </td>
             <td>
-                <div id="item-6" data-name="Vegetarian Pizza" data-price="12.50"> 
+                <div id="item-6" data-name="Vegetarian Pizza" data-price="12.50" style="background-image: url(images/greek-lamb-pizza.jpg)"> 
                     <p>Vegetarian Pizza</p>
                     <button type="button" name="item-6" onclick="addItem(6)">ADD TO CART</button>   
                 </div>
             </td>
             <td>
-                <div id="item-7" data-name="Double Cheese Pizza" data-price="12.50"> 
+                <div id="item-7" data-name="Double Cheese Pizza" data-price="12.50" style="background-image: url(images/greek-lamb-pizza.jpg)"> 
                     <p>Double Cheese Pizza</p>
                     <button type="button" name="item-7" onclick="addItem(7)">ADD TO CART</button>   
                 </div>
             </td>
-        </tr>
-        <tr>
             <td>
-                <div id="item-8" data-name="Spicy Pork Pizza" data-price="10"> 
+                <div id="item-8" data-name="Spicy Pork Pizza" data-price="10" style="background-image: url(images/greek-lamb-pizza.jpg)"> 
                     <p>Spicy Pork Pizza</p>
                     <button type="button" name="item-8" onclick="addItem(8)">ADD TO CART</button>
                 </div>
             </td>
             <td>
-                <div id="item-9" data-name="Original Pizza" data-price="10"> 
+                <div id="item-9" data-name="Original Pizza" data-price="10" style="background-image: url(images/greek-lamb-pizza.jpg)"> 
                     <p>Original Pizza</p>
                     <button type="button" name="item-9" onclick="addItem(9)">ADD TO CART</button>   
                 </div>
             </td>
             <td>
-                <div id="item-10" data-name="Chicken Pizza" data-price="12.50"> 
+                <div id="item-10" data-name="Chicken Pizza" data-price="12.50" style="background-image: url(images/greek-lamb-pizza.jpg)"> 
                     <p>Chicken Pizza</p>
                     <button type="button" name="item-10" onclick="addItem(10)">ADD TO CART</button>   
                 </div>
             </td>
             <td>
-                <div id="item-11" data-name="Dessert     Pizza" data-price="12.50"> 
+                <div id="item-11" data-name="Dessert Pizza" data-price="12.50" style="background-image: url(images/greek-lamb-pizza.jpg)"> 
                     <p>Dessert Pizza</p>
                     <button type="button" name="item-11" onclick="addItem(11)">ADD TO CART</button>   
                 </div>
@@ -215,6 +266,17 @@ function removeItem(index) {
         </tr>
     </table>
 </form>
+</div>
+<div id="order-placed">
+    <p>your order has been placed</p>
+    <table id="order-display">
+        <tr>
+            <th>Item</th>
+            <th>Quantity</th>
+            <th>Cost</th>
+        </tr>
+    </table>
+</div>    
 <div class="para-with-title">
     <h2>This is a Heading 2</h2>    
     <p>
@@ -228,8 +290,7 @@ function removeItem(index) {
     <nav>
         <ul>
             <li><a href="index.html">HOME</a></li>
-            <li><a href="gallery.html">GALLERY</a></li>
-            <li><a href="forum.html">FORUM</a></li>
+            <li><a href="order.html">PLACE AN ORDER</a></li>
             <li><a href="contact.html">CONTACT</a></li>
         </ul> 
     </nav>
