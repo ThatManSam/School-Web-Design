@@ -3,21 +3,23 @@
 <head>
     <title>This is the Title</title>
     <meta charset="UFT-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,400i,700,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:100,300,400,400i,700,900" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body onload="contructItemList()">
 <header>
     <div class="header-title">
         <div class="wrapper">
-            <!--<img src="NEED TO MAKE"/>-->
-            <h1>Website title</h1>
+            <div id="menu-trigger">
+                <a onclick="openMenuSidebar()">&#9776;</a>
+            </div>
+            <a href="index.html"><div id="header-image"><img src="images/greek-lamb-pizza.jpg"/></div>
+            <h1>PIZZA TO GO</h1></a>
         </div>
     </div>
     <div class="wrapper">
-        <div id="menu-trigger">
-            <a onclick="openMenuSidebar()">&#9776; Menu</a>
-        </div>
         <script>
         function openMenuSidebar() {
             document.getElementById("header-navigation").style.left = "0";
@@ -151,6 +153,10 @@ function removeItem(index) {
 }
 
 function submitOrder() {
+    if(cart.length === 0) {
+        alert("You must order some items to submit");
+        window.reload();
+    }
     var totalPrice = 0;
     var price;
     var quantity;
@@ -158,33 +164,101 @@ function submitOrder() {
     var a;
     for(a=0; a < cart.length; a++) {
         id = cart[a].id;
-        itemsId = function() {
+        itemsId = function(cartId) {
             for(i=0; i < items.length; i++) {
-                if(items[i].id === id) {
+                if(items[i].id === cartId) {
                 return i;
                 }
             }
         }
-        price = Number(items[itemsId()].price);
+        price = Number(items[itemsId(id)].price);
         quantity = Number(cart[a].quantity);
         totalPrice += (price * quantity);
     }
     console.log("Total Price: " + totalPrice); 
-
+    orderPlaced(totalPrice);
 }
 
-function orderPlaced() {
+function orderPlaced(totalPrice) {
+    var appendNode = document.createElement("tbody");
+    appendNode.innerHTML = '<tbody><tr><th class="table-name">Item</th><th class="table-quantity">Quantity</th><th class="table-cost">Cost</th></tr>';
+    var name;
+    var singlePrice;
+    var price;
+    var quantity;
+    var i;
+    var a;
+    for(a=0; a < cart.length; a++) {
+        id = cart[a].id;
+        itemsId = function(cartId) {
+            for(i=0; i < items.length; i++) {
+                if(items[i].id === cartId) {
+                return i;
+                }
+            }
+        }
+        name = items[itemsId(id)].name;
+        singlePrice = items[itemsId(id)].price;
+        quantity = cart[a].quantity;
+        price = singlePrice * quantity;
+
+        var dataNode = document.createElement("tr");
+        dataNode.innerHTML = '<td class="table-name">'+name+'</td><td class="table-quantity">'+quantity+'</td><td class="table-price">$'+price+'</td>';
+        appendNode.appendChild(dataNode);
+    }
+    var totalQuantity = 0;
+    for(a=0; a < cart.length; a++) {
+        totalQuantity += cart[a].quantity;
+    }
+    
+    var totalNode = document.createElement("tr");
+    totalNode.style.fontWeight = "500";
+    totalNode.innerHTML = '<td class="table-name">Total</td><td class="table-quantity">'+Number(totalQuantity)+'</td><td class="table-price">$'+totalPrice+'</td>';
+    appendNode.appendChild(totalNode);
+
+    document.getElementById("order-display-table").appendChild(appendNode);
+
     document.getElementById("order-form").style.display = "none";
-    document.getElementById("order-placed").style.display = "block";
+    document.getElementById("cart").style.display = "none";
+    document.getElementById("order-display").style.display = "block";
+}
+
+function confirmOrder() {
+    document.getElementById("order-display").style.display = "none";
+    document.getElementById("order-message").style.display = "block";
+    var newMeta = document.createElement("meta");
+    var newAttribute = document.createAttribute("http-equiv");
+    var newAttribute2 = document.createAttribute("content");
+    newAttribute.value = "refresh";
+    newAttribute2.value = "10";
+    newMeta.setAttributeNode(newAttribute);
+    newMeta.setAttributeNode(newAttribute2);
+    document.getElementsByTagName("head")[0].appendChild(newMeta);
+}
+
+function changeOrder() {
+    document.getElementById("order-form").style.display = "block";
+    document.getElementById("cart").style.display = "block";
+    document.getElementById("order-display").style.display = "none";
+}
+
+function cancelOrder() {
+    location.reload();
 }
 </script>
 <div class="wrapper">
+<div class="para-with-title">
+    <h2>This is a Heading 2</h2>    
+    <p>
+        This is text in the paragraph with title. aliquam augue ante, quis vestibulum lorem posuere ut. Fusce blandit neque lorem, eget euismod quam viverra in. Fusce imperdiet risus odio, vel pulvinar magna blandit eget. Quisque aliquet at est posuere porta. Praesent volutpat, arcu non elementum bibendum, ipsum urna pretium dolor, eget accumsan odio sapien id orci. Vivamus nunc turpis, ornare semper velit eu, lacinia 
+    </p>
+</div>
 <div id="cart">
-    <p>Cart:</p>
+    <h3>Cart:</h3>
     <ul id="cart-list">
     </ul>
     <div id="cart-submit">
-    <button type="submit" name="submit" onclick="submitOrder(), orderPlaced()">SUBMIT</button>
+    <button type="submit" name="submit" onclick="submitOrder()">SUBMIT</button>
     </div>
 </div>
 <div id="order-form">
@@ -204,7 +278,7 @@ function orderPlaced() {
                 </div>
             </td>
             <td>
-                <div id="item-2" data-name="Hawaiian Pizza" data-price="12.50" style="background-image: url(images/greek-lamb-pizza.jpg)"> 
+                <div id="item-2" data-name="Hawaiian Pizza" data-price="12.50" style="background-image: url(images/hawaiian-pizza.jpg)"> 
                     <p>Hawaiian Pizza</p>
                     <button type="button" name="item-2" onclick="addItem(2)">ADD TO CART</button>   
                 </div>
@@ -267,20 +341,20 @@ function orderPlaced() {
     </table>
 </form>
 </div>
-<div id="order-placed">
-    <p>your order has been placed</p>
-    <table id="order-display">
-        <tr>
-            <th>Item</th>
-            <th>Quantity</th>
-            <th>Cost</th>
-        </tr>
+<div id="order-display">
+    <h3>Your Order: </h3>
+    <table id="order-display-table">
     </table>
-</div>    
-<div class="para-with-title">
-    <h2>This is a Heading 2</h2>    
+    <button id="confirm-button" name="confirm" onclick="confirmOrder()">CONFIRM</button>
+    <button id="cancel-button" name="cancel" onclick="cancelOrder()">CANCEL</button>
+    <button id="change-button" name="change" onclick="changeOrder()">CHANGE</button>
+    <p>Please pay on pickup.  Thanks!</p>
+</div>
+<div id="order-message">
+    <h3>Thanks You</h3>
     <p>
-        This is text in the paragraph with title. aliquam augue ante, quis vestibulum lorem posuere ut. Fusce blandit neque lorem, eget euismod quam viverra in. Fusce imperdiet risus odio, vel pulvinar magna blandit eget. Quisque aliquet at est posuere porta. Praesent volutpat, arcu non elementum bibendum, ipsum urna pretium dolor, eget accumsan odio sapien id orci. Vivamus nunc turpis, ornare semper velit eu, lacinia 
+        Your order has been placed and will be ready in 15 minutes. <br />
+        Please pay on pickup
     </p>
 </div>
 </div>

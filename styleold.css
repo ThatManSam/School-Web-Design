@@ -1,0 +1,650 @@
+/* 
+html5doctor.com Reset Stylesheet
+v1.6.1
+Last Updated: 2010-09-17
+Author: Richard Clark - http://richclarkdesign.com 
+Twitter: @rich_clark
+*/
+
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var,
+b, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+    margin:0;
+    padding:0;
+    border:0;
+    outline:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
+}
+
+body {
+    line-height:1;
+}
+
+article,aside,details,figcaption,figure,
+footer,header,hgroup,menu,nav,section { 
+    display:block;
+}
+
+nav ul {
+    list-style:none;
+}
+
+blockquote, q {
+    quotes:none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content:'';
+    content:none;
+}
+
+a {
+    color: black;
+    margin:0;
+    padding:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
+}
+
+/* change colours to suit your needs */
+ins {
+    background-color:#ff9;
+    color:#000;
+    text-decoration:none;
+}
+
+/* change colours to suit your needs */
+mark {
+    background-color:#ff9;
+    color:#000; 
+    font-style:italic;
+    font-weight:bold;
+}
+
+del {
+    text-decoration: line-through;
+}
+
+abbr[title], dfn[title] {
+    border-bottom:1px dotted;
+    cursor:help;
+}
+
+table {
+    border-collapse:collapse;
+    border-spacing:0;
+}
+
+/* change border colour to suit your needs */
+hr {
+    display:block;
+    height:1px;
+    border:0;   
+    border-top:1px solid #cccccc;
+    margin:1em 0;
+    padding:0;
+}
+
+input, select {
+    vertical-align:middle;
+}
+
+
+
+
+
+
+
+/**MY CODE STARTS HERE**/
+.wrapper {
+    background-color: #f1f1f1;
+    width: 960px;
+    margin: 0 auto;
+}
+
+/**HEADER and NAVIGATION**/
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+}
+
+header .header-title {
+    background-color: #0f0f35;
+    color: blue;
+    width: 100%;
+    height: 100px;
+}
+
+header .header-title img {
+    float: left;
+}
+
+header .header-title h1 {
+    float: left;
+    padding: 20px;
+}
+
+#menu-trigger {
+    display: none;
+}
+
+#navCloseButton {
+    color: #ffffff;
+    z-index: 99;
+    display: none;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+header nav {
+    text-align: center;
+    height: 0; 
+}
+
+header nav ul li {
+    display: inline-block;
+    padding: 5px;
+    position: relative;
+    z-index: 2;
+}
+
+header nav ul li a{
+    text-decoration: none;
+} 
+
+header nav ul li div {
+    color: #000000;
+    font: normal 300 20px Lato;
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+    height: auto;
+    padding: 15px 25px;
+    border-radius: 25px;
+    border: 0px;
+    background-color: #ffffff;
+}
+
+header nav ul li div:hover {
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75) inset;
+    -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75) inset;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75) inset;
+}
+
+section {
+    min-height: calc(100vh - 268px);
+    margin-top: 163px;
+}
+
+.para-with-title {
+    padding: 20px 0;
+}
+.para-with-title h2 {
+    font-weight: 700;
+    font-family: Lato;
+    font-size: 24px;
+    text-align: center;
+    padding-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.para-with-title p {
+    background-color: #ffffff;
+    padding: 10px;
+    font-weight: 400;
+    font-family: Lato;
+    font-size: 16px;
+    text-align: center;
+    line-height: 22px;
+    margin: 0 20px;
+}
+
+/**SCROLLING BANNER**/
+
+.scroll-banner {
+    margin: 0 auto;
+    position: relative;
+    width: 100%;
+    height: 20vw;
+    overflow: hidden;
+}
+
+.scroll-banner a.button {
+    width: 100%;
+}
+
+.scroll-banner div.banner-img {
+    position: absolute;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 20vw;
+    transition: left 1s;
+    overflow: hidden;
+}
+
+.scroll-banner div img {
+    width: inherit;
+    position: absolute;
+    left: -9999px;
+    right: -9999px;
+    top: -9999px;
+    bottom: -9999px;
+    margin: auto;
+}
+
+.scroll-banner div#img0 {
+    display: block;
+    left: 0;
+    z-index: 1;
+}
+
+.scroll-banner a.button {
+    font-size: 2vw;
+    background-color: rgba(90, 89, 89, 0.4);
+    color: white;
+    cursor: pointer;
+    position: absolute;
+    width: auto;
+    padding: 9vw 10px;
+    z-index: 2;
+    height: 100%;
+}
+.scroll-banner a.button:hover {
+    background-color: rgba(120, 120, 120, 0.8);
+}
+.scroll-banner #bannerRightButton {
+    position: absolute;
+    width: auto;
+    right: 0;
+}
+
+/**ORDER FORM**/
+form[name="order-form"] td {
+    position: relative;
+    height: 200px;
+    width: 240px;
+    float: left;
+}
+
+form[name="order-form"] div {
+    position: relative;
+    font-family: Lato;
+    font-weight: 400;
+    font-size: 26px;
+    margin: 10px;
+    height: 180px;
+    width: 220px;
+    background-size: auto 100%;
+    background-position: center center;
+    
+    -webkit-transition: all .25s ease-out;
+       -moz-transition: all .25s ease-out;
+        -ms-transition: all .25s ease-out;
+         -o-transition: all .25s ease-out;
+            transition: all .25s ease-out;
+}
+
+form[name="order-form"] div p {
+    position: relative;
+    margin: 15px;
+    top: 15px;
+    padding: 7px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.8);
+    
+    -webkit-transition: all .25s ease-out;
+       -moz-transition: all .25s ease-out;
+        -ms-transition: all .25s ease-out;
+         -o-transition: all .25s ease-out;
+            transition: all .25s ease-out;
+}
+
+form[name="order-form"] div button {
+    font-family: Lato;
+    font-weight: 300;
+    font-size: 22px;
+    border: none;
+    border-radius: 10px;
+    position: absolute;
+    margin: 15px;
+    right: 0;
+    bottom: 0;
+    padding: 7px;
+    opacity: 0.7;
+    cursor: pointer;
+    
+    -webkit-transition: all .25s ease-out;
+       -moz-transition: all .25s ease-out;
+        -ms-transition: all .25s ease-out;
+         -o-transition: all .25s ease-out;
+            transition: all .25s ease-out;
+}
+
+form[name="order-form"] div:hover {
+    background-size: auto 110%;
+    background-position: center center;
+}
+
+
+
+form[name="order-form"] div:hover button {
+    opacity: 1;
+    padding: 12px;
+}
+
+/**Cart list**/
+#cart {
+    position: relative;
+    width: 200px;
+    min-height: 200px;
+    padding: 10px;
+    padding-bottom: 50px;
+    float: right;
+    background: #cccccc;
+    display: block;
+}
+#cart-list {
+    float:left;
+}
+
+#cart-list li {
+    display: block;
+    padding: 5px 0;
+}
+
+#cart-list li button {
+    position: absolute;
+    right: 10px;
+    float: right;
+}
+
+div#cart-submit {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding: 15px;
+}
+
+div#order-display {
+    overflow: auto;
+    width: 604px;
+    margin: 0 auto;
+    display: none;
+    font-family: Lato;
+    font-size: 20px;
+    font-weight: 300;
+}
+
+div#order-display p {
+    padding: 20px;
+}
+
+div#order-display td, th {
+    padding: 5px;
+}
+
+div#order-display th {
+    background-color: #cccccc;
+    border: 1px solid #dddddd;
+}
+
+div#order-display td {
+    background-color: #dddddd;
+    border: 1px solid #eeeeee;
+}
+
+div#order-display .table-name {
+    width: 200px;
+}
+
+div#order-display .table-quantity {
+    width: 200px;
+}
+
+div#order-display .table-price {
+    width: 200px;
+}
+
+#order-message {
+    display: none;
+}
+
+div#order-display button {
+    font-family: Lato;
+    font-weight: 300;
+    padding: 5px;
+    margin: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+div#order-display #confirm-button {
+    color: #ffffff;
+    float: left;
+    margin-left: 0;
+    background-color: #c02b2b;
+}
+
+div#order-display #cancel-button {
+    float: right;
+    margin-right: 0;
+}
+
+div#order-display #change-button {
+    float: right;
+}
+
+/**Contact Form**/
+#contact-form {
+    padding: 10px;
+}
+
+#contact-form p {
+    font-family: Lato;
+    font-weight: 300;
+    padding: 5px 0;
+}
+
+#contact-form input, #contact-form textarea {
+    font-family: Lato;
+    font-weight: 300;
+    border: 1px solid black;
+    padding: 5px;
+}
+
+/**FOOTER**/
+footer {
+    background-color: #000000;
+}
+
+footer nav ul li {
+    font: 300 20px Lato;
+    padding: 40px 10px;
+    display: inline-block;
+}
+
+footer nav ul li a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+@media screen and (max-width: 960px) {
+    .wrapper {
+        width: 600px;
+    }
+
+    .scroll-banner {
+        height: 200px;
+    }
+
+    .scroll-banner div.banner-img {
+        height: 200px;
+    }
+
+    .scroll-banner a.button {
+        font-size: 20px;
+        padding: 90px 10px;
+    }
+
+    .scroll-banner div img {
+        position: absolute;
+        left: -9999px;
+        right: -9999px;
+        top: -9999px;
+        bottom: -9999px;
+        margin: auto;
+        height: 550px;
+        width: auto;
+    }
+
+    #cart {
+        width: 100px;
+    }
+
+    form[name="order-form"] td {
+        height: 180px;
+        width: 220px;
+    }
+
+    form[name="order-form"] div {
+        font-size: 26px;
+        margin: 10px;
+        height: 160px;
+        width: 200px;
+    }
+    
+    form[name="order-form"] div p {
+        margin: 10px;
+        top: 10px;
+        padding: 5px;
+    }
+    
+    form[name="order-form"] div button {
+        font-size: 20px;
+        margin: 10px;
+        right: 0;
+        bottom: 0;
+        padding: 10px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .wrapper {
+        width: 100%;
+    }
+    .scroll-banner div img {
+        height: 450px;
+    }
+
+    #cart {
+        width: 100px;
+    }
+    
+    form[name="order-form"] td {
+        height: 140px;
+        width: 160px;
+    }
+
+    form[name="order-form"] div {
+        font-size: 16px;
+        margin: 10px;
+        height: 120px;
+        width: 140px;
+    }
+    
+    form[name="order-form"] div p {
+        margin: 10px;
+        top: 10px;
+        padding: 5px;
+    }
+    
+    form[name="order-form"] div button {
+        font-size: 16px;
+        margin: 10px;
+        right: 0;
+        bottom: 0;
+        padding: 5px;
+    }
+
+    form[name="order-form"] div:hover button {
+        padding: 7px;
+    }
+
+    /**Navigation side bar**/
+    #menu-trigger {
+        display: block;
+        font-family: Lato;
+        font-weight: 300;
+        font-size: 36px;
+        padding: 5px;
+    }
+
+    #menu-trigger {
+        cursor: pointer;
+    }
+
+    section {
+        margin-top: 146px;
+    }
+    
+    header nav {
+        height: 100vh;
+        width: 250px;
+        position: fixed;
+        z-index: 98;
+        top: 0;
+        left: -250px;
+        background-color: #111;
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px;
+        /**Reseting**/
+        text-align: right;
+    }
+    
+    header nav ul li {
+        padding: 5px;
+        /**Reseting**/
+        display: block;
+    }
+        
+    header nav ul li div {
+        color: #000000;
+        font: normal 300 20px Lato;
+        -webkit-box-shadow: 0px 0px 10px 0px rgba(255,255,255,0.75);
+        -moz-box-shadow: 0px 0px 10px 0px rgba(255,255,255,0.75);
+        box-shadow: 0px 0px 10px 0px rgba(255,255,255,0.75);
+        height: auto;
+        padding: 15px 25px;
+        border-radius: 25px;
+        border: 0px;
+        background-color: #ffffff;
+        white-space: nowrap;
+    }
+    
+    header nav ul li div:hover {
+        -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75) inset;
+        -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75) inset;
+        box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75) inset;
+    }
+}

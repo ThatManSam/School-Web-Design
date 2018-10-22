@@ -5,20 +5,21 @@
     <meta charset="UFT-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,400i,700,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:100,300,400,400i,700,900" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body onload="bannerSetup()" onresize="widthTest()">
 <header>
     <div class="header-title">
         <div class="wrapper">
-            <!--<img src="NEED TO MAKE"/>-->
-            <h1>Website title</h1>
+            <div id="menu-trigger">
+                <a onclick="openMenuSidebar()">&#9776;</a>
+            </div>
+            <a href="index.html"><div id="header-image"><img src="images/greek-lamb-pizza.jpg"/></div>
+            <h1>PIZZA TO GO</h1></a>
         </div>
     </div>
-    <div class="wrapper">
-        <div id="menu-trigger">
-            <a onclick="openMenuSidebar()">&#9776; Menu</a>
-        </div>
+    <div class="wrapper"> 
         <script>
         function openMenuSidebar() {
             document.getElementById("header-navigation").style.left = "0";
@@ -127,6 +128,7 @@ function bannerLeft() {
             <li><a href="index.html">HOME</a></li>
             <li><a href="order.html">PLACE AN ORDER</a></li>
             <li><a href="contact.html">CONTACT</a></li>
+        </ul>
     </nav>
 </div>
 </footer>
