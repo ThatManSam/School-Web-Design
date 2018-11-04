@@ -2,40 +2,62 @@
 <html>
 <head>
     <title>This is the Title</title>
-    <meta charset="UFT-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,400i,700,900" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:100,300,400,400i,700,900" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-<body onload="bannerSetup()">
+<body>
 <header>
     <div class="header-title">
         <div class="wrapper">
             <div id="menu-trigger">
                 <a onclick="openMenuSidebar()">&#9776;</a>
             </div>
-            <a href="index.html"><div id="header-image"><img src="images/greek-lamb-pizza.jpg"/></div>
-            <h1>PIZZA TO GO</h1></a>
+            <a href="index.html"><div id="header-image"><img src="images/meat-lovers-pizza.jpg"/></div>
+                <h1>TASTE OF HAMILTRON</h1>
+            </a>
         </div>
     </div>
     <div class="wrapper">
         <script>
+        //Function to open the side bar with the menu (when display is too small)
         function openMenuSidebar() {
             document.getElementById("header-navigation").style.left = "0";
             document.getElementById("navCloseButton").style.display = "block";
         }
-
+        //Function to close the side bar
         function closeMenuSidebar() {
             document.getElementById("header-navigation").style.left = "-250px";
             document.getElementById("navCloseButton").style.display = "none";
         }
-
+        //function to close the side bar if the width of the window changes, preventing it from being open when the window is smaller again
         function widthTest() {
             console.log("Width Test");
             var width = window.innerWidth;
             if(width >= 600) {
                 closeMenuSidebar();
+            }
+        }
+        //Function to gather all the infromation from the email form
+        /**Note: This is only taking the information and converting it into viewable data, however, 
+        to actually send an email would require another server-side programming language, such as PHP**/
+        function sendContact() {
+            //Grabbing information from HTML and setting it to variables
+            var name = document.getElementById("contact-name").value;
+            var email = document.getElementById("contact-email").value;
+            var subject = document.getElementById("contact-subject").value;
+            var message = document.getElementById("contact-textarea").value;
+            if(name == '' || email == '' || subject == '' || message == '') {
+                //Checking that all fields have been filled out (this does not validate it though)
+                window.alert("Please fill out all the fields to send");
+            } else {
+            console.log("This is the message:");
+            console.log("Name: " + name);
+            console.log("Email: " + email);
+            console.log("Subject: " + subject);
+            console.log("Message: " + message);
             }
         }
         </script>
@@ -51,27 +73,30 @@
 </header>
 <section>
 <div class="wrapper" style="overflow: hidden;">
-<form id="contact-form">
-    <p>Name:</p>
-    <input type="text" name="name" placeholder="eg. John Parker">
-    <br />
-    <p>Email:</p>
-    <input type="text" name="email" placeholder="eg. john.parker@example.com">
-    <br />
-    <p>Subject:</p>
-    <input type="text" name="subject" placeholder="eg. Wrong Order">
-    <br />
-    <p>Message:</p>
-    <textarea name="message" id="contact-textarea" cols="30" rows="10"></textarea>  
-</form>
 <div id="contact-info">
     <p>Contact Information:</p>
     <ul>
         <li>Phone: 020 415 22312</li>
-        <li>Email: example@gmail.com</li>
-        <li>Opening Hours:</li>
+        <li>Email: tsthamiltron@gmail.com</li>
+        <li>Opening Hours: <br />Mon - Sat, 8am - 6pm</li>
     </ul>
 </div>
+<!--The form where the user could send an email to the resturant-->
+<form id="contact-form" method="POST" action="http://ajsystems.co.nz/joel/console.php">
+    <h2>Contact Us!</h2>
+    <p>Name:</p>
+    <input type="text" name="name" id="contact-name" placeholder="eg. John Parker" required>
+    <br />
+    <p>Email:</p>
+    <input type="text" name="email" id="contact-email" placeholder="eg. john.parker@example.com" required>
+    <br />
+    <p>Subject:</p>
+    <input type="text" name="subject" id="contact-subject" placeholder="eg. Wrong Order" required>
+    <br />
+    <p>Message:</p>
+    <textarea name="message" id="contact-textarea" cols="30" rows="10" required></textarea>  
+    <button type="submit" name="send" onclick="sendContact()">SEND</button>
+</form>
 </div>
 </section>
 <footer>

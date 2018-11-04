@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>This is the Title</title>
-    <meta charset="UFT-8">
+    <title>Taste Of Hamiltron</title>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,400i,700,900" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:100,300,400,400i,700,900" rel="stylesheet">
@@ -15,22 +15,24 @@
             <div id="menu-trigger">
                 <a onclick="openMenuSidebar()">&#9776;</a>
             </div>
-            <a href="index.html"><div id="header-image"><img src="images/greek-lamb-pizza.jpg"/></div>
-            <h1>PIZZA TO GO</h1></a>
+            <a href="index.html"><div id="header-image"><img src="images/meat-lovers-pizza.jpg"/></div>
+                <h1>TASTE OF HAMILTRON</h1>
+            </a>
         </div>
     </div>
     <div class="wrapper">
         <script>
+        //Function to open the side bar with the menu (when display is too small)
         function openMenuSidebar() {
             document.getElementById("header-navigation").style.left = "0";
             document.getElementById("navCloseButton").style.display = "block";
         }
-
+        //Function to close the side bar
         function closeMenuSidebar() {
             document.getElementById("header-navigation").style.left = "-250px";
             document.getElementById("navCloseButton").style.display = "none";
         }
-
+        //function to close the side bar if the width of the window changes, preventing it from being open when the window is smaller again
         function widthTest() {
             console.log("Width Test");
             var width = window.innerWidth;
@@ -55,11 +57,13 @@
 var cart = [];
 var items = [];
 var itemNum = 0;
+var totalPrice;
 
-//adding items to the items[] array based on items in the HTML code
+//adding all the items from the menu to the items[] array based on the HTML code
 function contructItemList() {
     var i;
-    for (i=0; document.getElementById("item-"+i) !== null; i++) {//each item added as an object with some properties
+    for (i=0; document.getElementById("item-"+i) !== null; i++) {
+        //each item added as an object with some properties (id, name and price)
         items.push({
             "id": i, 
             "name": document.getElementById("item-" + i).getAttribute("data-name"), 
@@ -69,49 +73,60 @@ function contructItemList() {
     console.log(items);
 }
 
+//Making the HTML list to display the items in the current order ("Cart:" on the right or at top on webpage)
 function cartListContructor(index, create) {
     var newCartItem;
     var currentItem;
-    itemId = function() {
+    //finding the item id to gather more information from the itemId[] array
+    var itemId = function() {
+        var i;
         for(i=0; i < cart.length; i++) {
             if(cart[i].id === index) {
             return i;
             }
         }
         return -1;
-    }
+    };
     var id = itemId();
     if(create) {
+        //if this is the first time the particular item is added, it is added as a new line
         newCartItem = document.createElement("li"); //Creating a new <li> tag for a new item added to the cart
         newCartItem.setAttribute("id", "cart-" + index);
         console.log(index);
-        newCartItem.innerHTML = //The HTML code to be added for the new cart
+        newCartItem.innerHTML = //The HTML code to be added for the new item in the cart
             '<button type="button" name="cart-'+ index +'" onclick="removeItem('+ index +')">X</button><p id="cart-item">'+cart[id].name+' x <a id="quantity">'+cart[id].quantity+'</a></p>';
-        document.getElementById("cart-list").appendChild(newCartItem);
+        document.getElementById("cart-list").appendChild(newCartItem);//appening the new HTML to the cart list
     
     } else {
+        //else if this is order multiple of the same item, it just adds 1 to the quantity property
         currentItem = document.getElementById("cart-" + index);
         currentItem.querySelector("#quantity").innerHTML = cart[id].quantity;
     }
 }
 
+//adding an item from the menu to the cart
 function addItem(item) {
+    //Gathering the information into variables
     var itemName = items[item].name;
     var itemId = items[item].id;
     var create;
+    //used to find if an item is already in the cart (to add to the quantity instead of a whole new item)
     var index = function() {
+        var i;
         for(i=0; i < cart.length; i++) {
             if(cart[i].name === itemName) {
             return i;
             }
         }
         return -1;
-    }
+    };
     var cartIndex = index();
     if(cartIndex !== -1) {
+        //if item is already in cart, set the "create" variable to false
         cart[cartIndex].quantity += 1;
         create = false;
     } else {
+        //otherwise add it to the cart as a new object
         cart.push({
             "id": itemId,
             "name": itemName,
@@ -120,66 +135,82 @@ function addItem(item) {
         create = true;
         console.log(cart);
     }
-    cartListContructor(itemId, create);
+    cartListContructor(itemId, create);//triggering the "cartListConstructor()" function to update the HTML ("Cart:" list)
 }
 
 //Removing an product from the cart / array cart[] and removing it from the HTML cart list
 function removeItem(index) {
+    var currentItem;
+    var deletedItem;
     var itemId = function() {
+        var i;
         for(i=0; i < cart.length; i++) {
             if(cart[i].id === index) {
             return i;
             }
         }
-        return -1;
-    }
+        return -1;//if there is some error (as the item doesn't exist) this "-1" will make an error display in the console
+    };
     var id = itemId();
+    //
     if(id === -1) {
+        //the error to display in the console
         console.log("Cannot remove item that doesn't exist     "+index);
         console.log(cart);
         return;
     } else {
-    if(cart[id].quantity === 1) {
-        deletedItem = document.getElementById("cart-" + index);
-        deletedItem.parentNode.removeChild(deletedItem);
-        cart.splice(id, 1);
-    } else {
-        cart[id].quantity = cart[id].quantity - 1;
-        currentItem = document.getElementById("cart-" + index);
-        currentItem.querySelector("#quantity").innerHTML = cart[id].quantity;
-    }
-    console.log(cart);
+        if(cart[id].quantity === 1) {
+            //if only 1 quantity on cart, remove the item completely
+            deletedItem = document.getElementById("cart-" + index);
+            deletedItem.parentNode.removeChild(deletedItem);//remove from HTML
+            cart.splice(id, 1);//remove from cart
+        } else {
+            //if more than 1 quantity on cart, decrease the quantity by 1
+            cart[id].quantity = cart[id].quantity - 1;//remove from cart
+            currentItem = document.getElementById("cart-" + index);
+            currentItem.querySelector("#quantity").innerHTML = cart[id].quantity;//update HTML
+        }
+        console.log(cart);//displaying the current cart in console, used for testing the "adding and removing from cart" functionality
     }
 }
-
+//Calculating the total price and quantity
 function submitOrder() {
-    if(cart.length === 0) {
-        alert("You must order some items to submit");
+    if(cart.length === 0) {//cheking that there are actually items ordered
+        window.alert("You must order some items to submit");
         window.reload();
     }
-    var totalPrice = 0;
+    //Total Price calculation
+    totalPrice = 0;
     var price;
     var quantity;
     var i;
     var a;
-    for(a=0; a < cart.length; a++) {
-        id = cart[a].id;
-        itemsId = function(cartId) {
-            for(i=0; i < items.length; i++) {
-                if(items[i].id === cartId) {
-                return i;
-                }
+    var id;
+    var itemsId = function(cartId) {
+        for(i=0; i < items.length; i++) {
+            if(items[i].id === cartId) {
+            return i;
             }
         }
+    };
+    //a for loop which goes through the cart and calculates the price*quantity and adds them to the total price
+    for(a=0; a < cart.length; a++) {
+        id = cart[a].id;
         price = Number(items[itemsId(id)].price);
         quantity = Number(cart[a].quantity);
-        totalPrice += (price * quantity);
+        totalPrice += (price * quantity);//adding price to the total
     }
-    console.log("Total Price: " + totalPrice); 
-    orderPlaced(totalPrice);
+    console.log("Total Price: " + totalPrice);//Console log used to check if the calculation were correct, with no errors
+    //Total Quantity calculation
+    var totalQuantity = 0;
+    for(a=0; a < cart.length; a++) {
+        totalQuantity += cart[a].quantity;
+    }
+    orderPlaced(totalPrice, totalQuantity);
 }
-
-function orderPlaced(totalPrice) {
+//creating the table displaying the cart (items, quantity and price)
+function orderPlaced(totalPrice, totalQuantity) {
+    //creating the table
     var appendNode = document.createElement("tbody");
     appendNode.innerHTML = '<tbody><tr><th class="table-name">Item</th><th class="table-quantity">Quantity</th><th class="table-cost">Cost</th></tr>';
     var name;
@@ -188,69 +219,85 @@ function orderPlaced(totalPrice) {
     var quantity;
     var i;
     var a;
-    for(a=0; a < cart.length; a++) {
-        id = cart[a].id;
-        itemsId = function(cartId) {
-            for(i=0; i < items.length; i++) {
-                if(items[i].id === cartId) {
-                return i;
-                }
+    var id;
+    var itemsId = function(cartId) {
+        for(i=0; i < items.length; i++) {
+            if(items[i].id === cartId) {
+            return i;
             }
         }
+    }
+    // finding all the relevant information about an item, then making the HTML code
+    for(a=0; a < cart.length; a++) {
+        id = cart[a].id;
+        //All relevant information
         name = items[itemsId(id)].name;
         singlePrice = items[itemsId(id)].price;
         quantity = cart[a].quantity;
         price = singlePrice * quantity;
 
-        var dataNode = document.createElement("tr");
+        //Creating HTML code for a new row for each item
+        var dataNode = document.createElement("tr");//HTML to be added
         dataNode.innerHTML = '<td class="table-name">'+name+'</td><td class="table-quantity">'+quantity+'</td><td class="table-price">$'+price+'</td>';
         appendNode.appendChild(dataNode);
     }
-    var totalQuantity = 0;
-    for(a=0; a < cart.length; a++) {
-        totalQuantity += cart[a].quantity;
-    }
-    
-    var totalNode = document.createElement("tr");
+
+    //Adding the Total calculations to the bottom of the table
+    var totalNode = document.createElement("tr");//Totals HTML
     totalNode.style.fontWeight = "500";
     totalNode.innerHTML = '<td class="table-name">Total</td><td class="table-quantity">'+Number(totalQuantity)+'</td><td class="table-price">$'+totalPrice+'</td>';
     appendNode.appendChild(totalNode);
 
-    document.getElementById("order-display-table").appendChild(appendNode);
+    //resetting the table, so if the "CHANGE" button pressed the next generated table will overwrite the old (instead of the old being displayed)
+    document.getElementById("order-display-table").innerHTML = "";
+    document.getElementById("order-display-table").appendChild(appendNode);//Placing the new table on the webpage
 
     document.getElementById("order-form").style.display = "none";
     document.getElementById("cart").style.display = "none";
     document.getElementById("order-display").style.display = "block";
 }
 
+//The final function when the confirm button is pressed, displaying the "Your order has been placed" screen
 function confirmOrder() {
     document.getElementById("order-display").style.display = "none";
     document.getElementById("order-message").style.display = "block";
-    var newMeta = document.createElement("meta");
-    var newAttribute = document.createAttribute("http-equiv");
-    var newAttribute2 = document.createAttribute("content");
-    newAttribute.value = "refresh";
-    newAttribute2.value = "10";
-    newMeta.setAttributeNode(newAttribute);
-    newMeta.setAttributeNode(newAttribute2);
-    document.getElementsByTagName("head")[0].appendChild(newMeta);
+    //triggring the function with a 10 second delay allowing the user to read the message before the page is reloaded by the php code
+    setTimeout(setupPhp, 10000);
 }
 
+//if the change order button is pressed this function will change the screen back to the menu (from the table)
 function changeOrder() {
     document.getElementById("order-form").style.display = "block";
     document.getElementById("cart").style.display = "block";
     document.getElementById("order-display").style.display = "none";
 }
 
+//cancelling the order button
 function cancelOrder() {
     location.reload();
+}
+
+function setupPhp() {
+    var name;
+    var quantity;
+    var passedString = "Items: ";
+    for(i=0; i < cart.length; i++) {
+        //converting the cart array into a single string to be passed to the php file, through the url GET method.
+    	name = cart[i].name;
+        quantity = cart[i].quantity;
+        passedString += name + " x "+ quantity + ", \n";
+    }
+    console.log(passedString);
+    window.location.href = "https://ajsystems.co.nz/joel/order.php?order=" + passedString + "&price=" + totalPrice;
 }
 </script>
 <div class="wrapper">
 <div class="para-with-title">
-    <h2>This is a Heading 2</h2>    
+    <h2>ORDER HERE!</h2>    
     <p>
-        This is text in the paragraph with title. aliquam augue ante, quis vestibulum lorem posuere ut. Fusce blandit neque lorem, eget euismod quam viverra in. Fusce imperdiet risus odio, vel pulvinar magna blandit eget. Quisque aliquet at est posuere porta. Praesent volutpat, arcu non elementum bibendum, ipsum urna pretium dolor, eget accumsan odio sapien id orci. Vivamus nunc turpis, ornare semper velit eu, lacinia 
+        Welcome to our currently small menu.  We are planning on adding new items in the future.<br />
+        Order online here and your meal will be ready in 15 minutes for pick up or dine in at our store.  If there are any issues, feel free to <a href="contact.html">Contact Us</a><br />
+        <strong>Pizzas cost $12.50 and Burgers cost $15.</strong>
     </p>
 </div>
 <div id="cart">
@@ -261,83 +308,76 @@ function cancelOrder() {
     <button type="submit" name="submit" onclick="submitOrder()">SUBMIT</button>
     </div>
 </div>
+<!--This is the order form, where the user clicks buttons triggering javascript functions, adding items-->
 <div id="order-form">
 <form name="order-form">
     <table>
         <tr>
             <td>
-                <div id="item-0" data-name="Greek Lamb Pizza" data-price="10" style="background-image: url(images/greek-lamb-pizza.jpg)"> 
-                    <p>Greek Lamb Pizza</p>
-                    <button type="button" name="item-0" onclick="addItem(0)" >ADD TO CART</button>
+                <div id="item-0" data-name="Meat Lovers Pizza" data-price="12.50" style="background-image: url(images/meat-lovers-pizza.jpg)"><!--and image of the item-->
+                    <p class="item-title">Meat Lovers Pizza</p>
+                    <button type="button" name="item-1" onclick="addItem(0)">ADD TO CART</button><!--adding the items to cart with the "addItem(id)" function-->
+                    <p class="img-credit">Photo by <a href="https://unsplash.com/photos/V2gzuCVlRhc?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText" target="_blank">Matteo Vistocco</a></p>
                 </div>
             </td>
             <td>
-                <div id="item-1" data-name="Meat Lovers Pizza" data-price="10" style="background-image: url(images/meat-lovers-pizza.jpg)"> 
-                    <p>Meat Lovers Pizza</p>
-                    <button type="button" name="item-1" onclick="addItem(1)">ADD TO CART</button>   
+                <div id="item-1" data-name="Pepperoni Pizza" data-price="12.50" style="background-image: url(images/pepperoni-pizza.jpg)"> 
+                    <p class="item-title">Pepperoni Pizza</p>
+                    <button type="button" name="item-6" onclick="addItem(1)">ADD TO CART</button> 
+                    <p class="img-credit"><a href="https://unsplash.com/photos/_0JpjeqtSyg?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText" target="_blank">Photo by Carissa Gan</a></p>  
                 </div>
             </td>
             <td>
-                <div id="item-2" data-name="Hawaiian Pizza" data-price="12.50" style="background-image: url(images/hawaiian-pizza.jpg)"> 
-                    <p>Hawaiian Pizza</p>
-                    <button type="button" name="item-2" onclick="addItem(2)">ADD TO CART</button>   
+                <div id="item-2" data-name="Spicy Pizza" data-price="12.50" style="background-image: url(images/spicy-pizza.jpg)"> 
+                    <p class="item-title">Spicy Pizza</p>
+                    <button type="button" name="item-8" onclick="addItem(2)">ADD TO CART</button>
+                    <p class="img-credit">Photo by <a href="https://unsplash.com/photos/eAut6QVVzWQ?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText" target="_blank">Oliver Pacas</a></p>
                 </div>
             </td>
             <td>
-                <div id="item-3" data-name="Supreme Pizza" data-price="12.50" style="background-image: url(images/greek-lamb-pizza.jpg)"> 
-                    <p>Supreme Pizza</p>
-                    <button type="button" name="item-3" onclick="addItem(3)">ADD TO CART</button>   
+                <div id="item-3" data-name="Vege Pizza" data-price="12.50" style="background-image: url(images/vege-pizza.jpg)"> 
+                    <p class="item-title">Vege Pizza</p>
+                    <button type="button" name="item-0" onclick="addItem(3)" >ADD TO CART</button>
+                    <p class="img-credit">Photo by <a href="https://unsplash.com/photos/gUBJ9vSlky0?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText" target="_blank">David Nuescheler</a></p>
                 </div>
             </td>
             <td>
-                <div id="item-4" data-name="Garlic Pizza" data-price="10" style="background-image: url(images/greek-lamb-pizza.jpg)"> 
-                    <p>Garlic Pizza</p>
-                    <button type="button" name="item-4" onclick="addItem(4)">ADD TO CART</button>
+                <div id="item-4" data-name="Chicken Burger" data-price="15" style="background-image: url(images/chicken-burger.jpg)"> 
+                    <p class="item-title">Chicken Burger</p>
+                    <button type="button" name="item-2" onclick="addItem(4)">ADD TO CART</button>
+                    <p class="img-credit">Photo by <a href="https://unsplash.com/photos/F_xGk7V0Xbc?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText" target="_blank">Erik Odiin</a></p>   
                 </div>
             </td>
             <td>
-                <div id="item-5" data-name="Cheese Pizza" data-price="10" style="background-image: url(images/greek-lamb-pizza.jpg)"> 
-                    <p>Cheese Pizza</p>
-                    <button type="button" name="item-5" onclick="addItem(5)">ADD TO CART</button>   
+                <div id="item-5" data-name="Cheese Burger" data-price="15" style="background-image: url(images/cheese-burger.jpg)"> 
+                    <p class="item-title">Cheese Burger</p>
+                    <button type="button" name="item-3" onclick="addItem(5)">ADD TO CART</button>
+                    <p class="img-credit">Photo by <a href="https://unsplash.com/photos/F_xGk7V0Xbc?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText" target="_blank">Erik Odiin</a></p>   
                 </div>
             </td>
             <td>
-                <div id="item-6" data-name="Vegetarian Pizza" data-price="12.50" style="background-image: url(images/greek-lamb-pizza.jpg)"> 
-                    <p>Vegetarian Pizza</p>
-                    <button type="button" name="item-6" onclick="addItem(6)">ADD TO CART</button>   
+                <div id="item-6" data-name="Vegetarian Burger" data-price="15" style="background-image: url(images/vegetarian-burger.jpg)"> 
+                    <p class="item-title">Vegetarian Burger</p>
+                    <button type="button" name="item-4" onclick="addItem(6)">ADD TO CART</button>
+                    <p class="img-credit"><a href="https://unsplash.com/photos/kPLccIMtS8E?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText" target="_blank">Photo by Deryn Macey</a></p>
                 </div>
             </td>
             <td>
-                <div id="item-7" data-name="Double Cheese Pizza" data-price="12.50" style="background-image: url(images/greek-lamb-pizza.jpg)"> 
-                    <p>Double Cheese Pizza</p>
-                    <button type="button" name="item-7" onclick="addItem(7)">ADD TO CART</button>   
+                <div id="item-7" data-name="Vege Burger" data-price="15" style="background-image: url(images/vege-burger.jpg)"> 
+                    <p class="item-title">Vege Burger</p>
+                    <button type="button" name="item-5" onclick="addItem(7)">ADD TO CART</button>
+                    <p class="img-credit">Photo by <a href="https://unsplash.com/photos/_TLKIVSW6Do?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText" target="_blank">Lefteris kallergis</a></p>   
                 </div>
             </td>
             <td>
-                <div id="item-8" data-name="Spicy Pork Pizza" data-price="10" style="background-image: url(images/greek-lamb-pizza.jpg)"> 
-                    <p>Spicy Pork Pizza</p>
-                    <button type="button" name="item-8" onclick="addItem(8)">ADD TO CART</button>
+                <div id="item-8" data-name="Fish Burger" data-price="15" style="background-image: url(images/fish-burger.jpg)"> 
+                    <p class="item-title">Fish Burger</p>
+                    <button type="button" name="item-7" onclick="addItem(8)">ADD TO CART</button>
+                    <p class="img-credit"><a href="https://unsplash.com/photos/KojQfg8UdCE?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText" target="_blank">Photo by Sameer Waskar</a></p>   
                 </div>
             </td>
-            <td>
-                <div id="item-9" data-name="Original Pizza" data-price="10" style="background-image: url(images/greek-lamb-pizza.jpg)"> 
-                    <p>Original Pizza</p>
-                    <button type="button" name="item-9" onclick="addItem(9)">ADD TO CART</button>   
-                </div>
-            </td>
-            <td>
-                <div id="item-10" data-name="Chicken Pizza" data-price="12.50" style="background-image: url(images/greek-lamb-pizza.jpg)"> 
-                    <p>Chicken Pizza</p>
-                    <button type="button" name="item-10" onclick="addItem(10)">ADD TO CART</button>   
-                </div>
-            </td>
-            <td>
-                <div id="item-11" data-name="Dessert Pizza" data-price="12.50" style="background-image: url(images/greek-lamb-pizza.jpg)"> 
-                    <p>Dessert Pizza</p>
-                    <button type="button" name="item-11" onclick="addItem(11)">ADD TO CART</button>   
-                </div>
-            </td>
-        </tr>
+            
+        </tr>    
     </table>
 </form>
 </div>
@@ -354,7 +394,8 @@ function cancelOrder() {
     <h3>Thanks You</h3>
     <p>
         Your order has been placed and will be ready in 15 minutes. <br />
-        Please pay on pickup
+        Please pay on pickup<br />
+        Please do not close this page until this message disappears to allow the page to process your order.
     </p>
 </div>
 </div>

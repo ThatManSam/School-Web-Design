@@ -1,41 +1,50 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>This is the Title</title>
-    <meta charset="UFT-8">
+    <title>Taste Of Hamiltron</title>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,400i,700,900" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:100,300,400,400i,700,900" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-<body onload="bannerSetup()" onresize="widthTest()">
+<body onload="bannerSetup(), widthTest()" onresize="widthTest()">
 <header>
     <div class="header-title">
         <div class="wrapper">
             <div id="menu-trigger">
                 <a onclick="openMenuSidebar()">&#9776;</a>
             </div>
-            <a href="index.html"><div id="header-image"><img src="images/greek-lamb-pizza.jpg"/></div>
-            <h1>PIZZA TO GO</h1></a>
+            <a href="index.html"><div id="header-image"><img src="images/meat-lovers-pizza.jpg"/></div>
+                <h1>TASTE OF HAMILTRON</h1>
+            </a>
         </div>
     </div>
     <div class="wrapper"> 
         <script>
+        //Function to open the side bar with the menu (when display is too small)
         function openMenuSidebar() {
             document.getElementById("header-navigation").style.left = "0";
             document.getElementById("navCloseButton").style.display = "block";
         }
-
+        //Function to close the side bar
         function closeMenuSidebar() {
             document.getElementById("header-navigation").style.left = "-250px";
             document.getElementById("navCloseButton").style.display = "none";
         }
-
+        //Checking what the width of the page is, to prevent the menu side bar being open when the window is resized
+        //and to change between the high resolusion images (for big displays) and low resolusion images (for small devices, like mobile phones)
         function widthTest() {
             console.log("Width Test");
             var width = window.innerWidth;
             if(width >= 600) {
+                document.getElementById("low-res").style.display = "none";
+                document.getElementById("hi-res").style.display = "block";
                 closeMenuSidebar();
+            }
+            else if(width < 600) {
+                document.getElementById("hi-res").style.display = "none";
+                document.getElementById("low-res").style.display = "block";
             }
         }
         </script>
@@ -53,45 +62,51 @@
 <section>
 <script>
 var currentImg = 0;
-
+//function to set the position of all the images in the scrolling bar, so they're beside each other instead of ontop
 function bannerSetup() {
     for (var i=0; i < 5; i++) {
-        document.getElementById("img" + i).style.left = 100*i + '%';
+        var x = document.querySelectorAll(".img1");  
+        console.log(x[0].style);
+        document.getElementsByClassName("img" + i)[0].style.left = 100*i + '%';
+        document.getElementsByClassName("img" + i)[1].style.left = 100*i + '%';
     }
 }
-function bannerRight() {
+//Function to scroll the banner to the right, or back to the start if it is the last image
+function bannerRight(res) {
+    var parent;
     var currentLeftValue;
     var imgToMove;
-    if (currentImg < 4) {
+    console.log(parent);
+    if (currentImg < 4) {//if scrolling to start
         for (var i=0; i < 5; i++) {
-            imgToMove = document.getElementById("img" + i);
+            imgToMove = document.getElementsByClassName("img" + i)[res];
             currentLeftValue = imgToMove.style.left;
             imgToMove.style.left = parseFloat(currentLeftValue) - 100 + "%";
         }
         currentImg += 1;
-    } else {
+    } else {//else scroll 1 along
         for(var i=0; i < 5; i++) {
-            imgToMove = document.getElementById("img" + i);
+            imgToMove = document.getElementsByClassName("img" + i)[res];
             currentLeftValue = imgToMove.style.left;
             imgToMove.style.left = parseFloat(currentLeftValue) + 400 + "%";
         }
         currentImg = 0;
     }
 }
-
-function bannerLeft() {
+//Function to scroll the banner to the left, or to the end if it is the first image
+function bannerLeft(res) {
     var currentLeftValue;
     var imgToMove;
-    if (currentImg > 0) {
+    if (currentImg > 0) {//if scrolling to end
         for (var i=0; i < 5; i++) {
-            imgToMove = document.getElementById("img" + i);
+            imgToMove = document.getElementsByClassName("img" + i)[res];
             currentLeftValue = imgToMove.style.left;
             imgToMove.style.left = parseFloat(currentLeftValue) + 100 + "%";
         }
         currentImg -= 1;
-    } else {
+    } else {//else scroll 1 back
         for(var i=0; i < 5; i++) {
-            imgToMove = document.getElementById("img" + i);
+            imgToMove = document.getElementsByClassName("img" + i)[res];
             currentLeftValue = imgToMove.style.left;
             imgToMove.style.left = parseFloat(currentLeftValue) - 400 + "%";
         }
@@ -101,22 +116,38 @@ function bannerLeft() {
     
 </script>
 <div class="scroll-banner">
+<!--High Resolution scroll banner-->
+<div id="hi-res">
     <a href="order.html">
-    <div id="img0" class="banner-img"><img src="star_trek_pics/enterprise_b.jpg" alt=""></div>
-    <div id="img1" class="banner-img"><img src="star_trek_pics/enterprise_d_front.jpg" alt=""></div>
-    <div id="img2" class="banner-img"><img src="star_trek_pics/enterprise_d_side.jpg" alt=""></div>
-    <div id="img3" class="banner-img"><img src="star_trek_pics/enterprise_reboot.jpg" alt=""></div>
-    <div id="img4" class="banner-img"><img src="star_trek_pics/enterprise_reboot_crash.jpg" alt=""></div>
+        <div class="img0 banner-img"><img src="images/hi-res/meat-lovers-pizza.jpg" alt=""></div>
+        <div class="img1 banner-img"><img src="images/hi-res/pepperoni-pizza.jpg" alt=""></div>
+        <div class="img2 banner-img"><img src="images/hi-res/cheese-burger.jpg" alt=""></div>
+        <div class="img3 banner-img"><img src="images/hi-res/vege-burger.jpg" alt=""></div>
+        <div class="img4 banner-img"><img src="images/hi-res/chicken-burger.jpg" alt=""></div>
     </a>
-    <a class="button" id="bannerLeftButton" onclick="bannerLeft()">&#10094;</a>
-    <a class="button" id="bannerRightButton" onclick="bannerRight()">&#10095;</a>
+    <a class="button" id="bannerLeftButton" onclick="bannerLeft(0)">&#10094;</a>
+    <a class="button" id="bannerRightButton" onclick="bannerRight(0)">&#10095;</a>
+</div>
+<!--Low Resolution scroll banner-->
+<div id="low-res">
+    <a href="order.html">
+        <div class="img0 banner-img"><img src="images/meat-lovers-pizza.jpg" alt=""></div>
+        <div class="img1 banner-img"><img src="images/pepperoni-pizza.jpg" alt=""></div>
+        <div class="img2 banner-img"><img src="images/cheese-burger.jpg" alt=""></div>
+        <div class="img3 banner-img"><img src="images/vege-burger.jpg" alt=""></div>
+        <div class="img4 banner-img"><img src="images/chicken-burger.jpg" alt=""></div>
+    </a>
+    <a class="button" id="bannerLeftButton" onclick="bannerLeft(1)">&#10094;</a>
+    <a class="button" id="bannerRightButton" onclick="bannerRight(1)">&#10095;</a>
+</div>
 </div>
 
 <div class="wrapper">
 <div class="para-with-title">
-    <h2>This is a Heading 2</h2>    
+    <h2>NOW SERVING THE TASTE OF HAMILTRON</h2>    
     <p>
-        This is text in the paragraph with title. aliquam augue ante, quis vestibulum lorem posuere ut. Fusce blandit neque lorem, eget euismod quam viverra in. Fusce imperdiet risus odio, vel pulvinar magna blandit eget. Quisque aliquet at est posuere porta. Praesent volutpat, arcu non elementum bibendum, ipsum urna pretium dolor, eget accumsan odio sapien id orci. Vivamus nunc turpis, ornare semper velit eu, lacinia 
+        Welcome to the Taste of Hamiltron!  We have just built our new premisis at <a href="https://www.google.co.nz/maps/place/384+Horsham+Downs+Rd,+Horsham+Downs+3281/@-37.7083098,175.2597652,17z/data=!3m1!4b1!4m5!3m4!1s0x6d6d3d51fe3097b5:0xf24be415bbff0120!8m2!3d-37.7083098!4d175.2619539" target="_blank">384 Horsham Downs Road</a>.
+        Feast on our new range of Pizzas and Burgers, for people who love meat to vegans.  Come and dine in our resturant today, or order your meal online <a href="order.html">HERE</a>
     </p>
 </div>
 </div>
